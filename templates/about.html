@@ -86,3 +86,25 @@
 {% endblock content %}
 
 
+{% block script %}
+<script>
+    const { createApp } = Vue;
+    createApp(
+        {
+            delimiters: ["[{", "}]"],
+            data() {
+                return {
+                    employee: null,
+                    department: null,
+                    page:"index",
+
+                };
+            },
+            
+            
+
+        }
+    ).mount('#app');
+</script>
+
+{% endblock script %}
