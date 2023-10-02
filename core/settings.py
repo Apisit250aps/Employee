@@ -15,6 +15,7 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+from config import config
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -79,11 +80,11 @@ WSGI_APPLICATION = 'core.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "verceldb",
-        "USER": "default",
-        "PASSWORD": "BFAmKJv7r3Uq",
-        "HOST": "ep-proud-mode-59402271-pooler.us-east-1.postgres.vercel-storage.com",
-        "PORT": "5432",
+        "NAME": config['database']['name'],
+        "USER": config['database']['user'],
+        "PASSWORD": config['database']['password'],
+        "HOST": config['database']['host'],
+        "PORT": config['database']['port'],
     }
 }
 
