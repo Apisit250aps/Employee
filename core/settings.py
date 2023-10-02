@@ -79,10 +79,10 @@ WSGI_APPLICATION = 'core.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "mydatabase",
-        "USER": "mydatabaseuser",
-        "PASSWORD": "mypassword",
-        "HOST": "127.0.0.1",
+        "NAME": "verceldb",
+        "USER": "default",
+        "PASSWORD": "BFAmKJv7r3Uq",
+        "HOST": "ep-proud-mode-59402271-pooler.us-east-1.postgres.vercel-storage.com",
         "PORT": "5432",
     }
 }
