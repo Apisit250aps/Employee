@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+<!-- block -->
+{% block content %}
+<!-- contents -->
+<div class="card">
+    <h5 class="card-header">Borderless Table</h5>
+    <div class="table-responsive text-nowrap">
+        <table class="table table-borderless">
+            <thead>
+                <tr>
+                    <th>ชื่อ</th>
+                    <th>นามสกุล</th>
+                    <th>เพศ</th>
+                    <th>อายุ</th>
+                    <th>ระดับการศึกษา</th>
+                    <th>แผนก</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="(item, index) in employee" :key="index">
+                    <td>[{item.fname}]</td>
+                    <td>[{item.lname}]</td>
+                    <td>
+                        [{item.gender}]
+                    </td>
+                    <td>
+                        [{item.age}]
+                    </td>
+                    <td>
+                        [{item.education}]
+                    </td>
+                    <td>
+                        <span class="badge bg-label-primary me-1">[{item.department}]</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock content %}
+<!-- script -->
+{% block script %}
+<script>
+    const { createApp } = Vue;
+    createApp(
+        {
+            delimiters: ["[{", "}]"],
+            data() {
+                return {
+                    employee: null,
+                    department: null
+
+                };
+            },
+            mounted() {
+                console.log("loaded");
+                axios(
+                    {
+                        method: "get",
+                        url: "{% url 'employee-api' %}"
+                    }
+                )
+                    .then((response) => {
+                        if (response.data['status']) {
+                            this.employee = response.data['data'];
+                        }
+                    });
+
+                axios(
+                    {
+                        method: "get",
+                        url: "{% url 'department-api' %}"
+                    }
+                )
+                    .then((response) => {
+                        if (response.data['status']) {
+                            this.department = response.data['data'];
+                        }
+                    });
+            },
+            methods: {
+                onFilter(id) {
+                    const form_data = new FormData;
+                    form_data.append('csrfmiddlewaretoken', "{{ csrf_token }}")
+                    form_data.append("id", id)
+                    axios(
+                        {
+                            method: 'post',
+                            url: `{% url 'employee-filter-api' %}`,
+                            data:form_data
+                        }
+                    )
+                        .then((response) => {
+                            if (response.data['status']) {
+                                this.employee = response.data['data'];
+                            }
+                        });
+                }
+            }
+
+        }
+    ).mount('#app');
+</script>
+{% endblock script %}
