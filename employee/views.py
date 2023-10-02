@@ -17,7 +17,9 @@ def index(request):
     
     return render(request, 'index.html')
 
-
+def about(request):
+    
+    return render(request, 'about.html')
 
 
 
@@ -26,7 +28,7 @@ def index(request):
 @api_view(["GET", ])
 @permission_classes((AllowAny,))
 def showEmployee(request):
-    employeeSerializer = serializers.EmployeeSerializer(models.Employee.objects.all(), many=True).data
+    employeeSerializer = serializers.EmployeeSerializer(models.Employee.objects.all().order_by('department'), many=True).data
     data =[]
     for item in employeeSerializer:
         item = dict(item)

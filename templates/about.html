@@ -1,0 +1,154 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card mb-3">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/M%C3%BCnster%2C_LVM%2C_B%C3%BCrogeb%C3%A4ude_--_2013_--_5149-51.jpg/640px-M%C3%BCnster%2C_LVM%2C_B%C3%BCrogeb%C3%A4ude_--_2013_--_5149-51.jpg"
+        class="card-img-top" alt="...">
+    <div class="card-body">
+        <h5 class="card-title">With Come Company</h5>
+        <hr>
+        <p class="card-text">
+            เ
+            เกี่ยวกับเรา
+
+            บริษัทรับเขียนโปรแกรม With Come Company ก่อตั้งขึ้นในปี พ.ศ. 2565
+            โดยกลุ่มวิศวกรซอฟต์แวร์ที่มีความเชี่ยวชาญและประสบการณ์ในอุตสาหกรรมการเขียนโปรแกรม
+            เรามีเป้าหมายในการช่วยให้ธุรกิจต่างๆ พัฒนาและเติบโตด้วยโซลูชันซอฟต์แวร์ที่มีประสิทธิภาพและตรงความต้องการ
+        </p>
+        <p class="card-text">
+            เราให้บริการออกแบบและพัฒนาซอฟต์แวร์สำหรับทุกประเภทธุรกิจ ไม่ว่าจะเป็นธุรกิจขนาดเล็ก ธุรกิจขนาดกลาง
+            หรือธุรกิจขนาดใหญ่ เรามีความเชี่ยวชาญในการพัฒนาซอฟต์แวร์หลากหลายประเภท เช่น
+        </p>
+        <ul>
+            <li>เว็บไซต์</li>
+            <li>แอปพลิเคชันมือถือ</li>
+            <li>ระบบบริหารทรัพยากรองค์กร (ERP)</li>
+            <li>ระบบฐานข้อมูล</li>
+            <li>เกม</li>
+            <li>ซอฟต์แวร์เฉพาะทาง</li>
+        </ul>
+        <p class="card-text">
+            เรามุ่งมั่นที่จะให้บริการลูกค้าของเราด้วยคุณภาพที่ดีที่สุด
+            เราทำงานอย่างใกล้ชิดกับลูกค้าเพื่อเข้าใจความต้องการและเป้าหมายของพวกเขา
+            เราใช้เทคโนโลยีและกระบวนการที่ดีที่สุดในการพัฒนาซอฟต์แวร์ที่มีประสิทธิภาพและใช้งานง่าย
+        </p>
+        <div class="row row-cols-1 row-cols-lg-2 m-auto">
+            <div class="col">
+                <b>จุดแข็งของเรา</b>
+                <hr>
+                <ul>
+                    <li>
+                        ทีมวิศวกรซอฟต์แวร์ที่มีความเชี่ยวชาญและประสบการณ์
+                    </li>
+                    <li>
+                        ความสามารถในการพัฒนาซอฟต์แวร์สำหรับทุกประเภทธุรกิจ
+                    </li>
+                    <li>
+                        ความมุ่งมั่นที่จะให้บริการลูกค้าด้วยคุณภาพที่ดีที่สุด
+                    </li>
+                </ul>
+            </div>
+            <div class="col">
+                <b>บริการของเรา</b>
+                <hr>
+                <ul>
+                    <li>
+                        ออกแบบและพัฒนาเว็บไซต์
+                    </li>
+                    <li>
+                        ออกแบบและพัฒนาแอปพลิเคชันมือถือ
+                    </li>
+                    <li>
+                        พัฒนาระบบบริหารทรัพยากรองค์กร (ERP)
+                    </li>
+                    <li>
+                        พัฒนาระบบฐานข้อมูล
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <b>
+            ติดต่อเรา
+        </b>
+        <hr>
+        <ul>
+            <li>ชื่อ นายอภิสิทธิ์ สายทอง</li>
+            <li>ที่อยู่ : บ้านหนูเอง</li>
+            <li>โทรศัพท์ : 065272xxxx</li>
+            <li>email : aps.apisit250@gmail.com</li>
+        </ul>
+
+
+        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+    </div>
+</div>
+
+{% endblock content %}
+
+
+{% block script %}
+<script>
+    const { createApp } = Vue;
+    createApp(
+        {
+            delimiters: ["[{", "}]"],
+            data() {
+                return {
+                    employee: null,
+                    department: null,
+                    page:"index",
+
+                };
+            },
+            mounted() {
+                console.log("loaded");
+                axios(
+                    {
+                        method: "get",
+                        url: "{% url 'employee-api' %}"
+                    }
+                )
+                    .then((response) => {
+                        if (response.data['status']) {
+                            this.employee = response.data['data'];
+                        }
+                    });
+
+                axios(
+                    {
+                        method: "get",
+                        url: "{% url 'department-api' %}"
+                    }
+                )
+                    .then((response) => {
+                        if (response.data['status']) {
+                            this.department = response.data['data'];
+                        }
+                    });
+            },
+            methods: {
+                onFilter(id) {
+                    this.page = id
+                    const form_data = new FormData;
+                    form_data.append('csrfmiddlewaretoken', "{{ csrf_token }}")
+                    form_data.append("id", id)
+                    axios(
+                        {
+                            method: 'post',
+                            url: `{% url 'employee-filter-api' %}`,
+                            data:form_data
+                        }
+                    )
+                        .then((response) => {
+                            if (response.data['status']) {
+                                this.employee = response.data['data'];
+                            }
+                        });
+                }
+            }
+
+        }
+    ).mount('#app');
+</script>
+
+{% endblock script %}

@@ -3,7 +3,7 @@
 {% block content %}
 <!-- contents -->
 <div class="card">
-    <h5 class="card-header">Borderless Table</h5>
+    <h5 class="card-header">Employees</h5>
     <div class="table-responsive text-nowrap">
         <table class="table table-borderless">
             <thead>
@@ -38,7 +38,7 @@
     </div>
 </div>
 {% endblock content %}
-<!-- script -->
+
 {% block script %}
 <script>
     const { createApp } = Vue;
@@ -48,7 +48,8 @@
             data() {
                 return {
                     employee: null,
-                    department: null
+                    department: null,
+                    page:"index",
 
                 };
             },
@@ -80,6 +81,7 @@
             },
             methods: {
                 onFilter(id) {
+                    this.page = id
                     const form_data = new FormData;
                     form_data.append('csrfmiddlewaretoken', "{{ csrf_token }}")
                     form_data.append("id", id)
