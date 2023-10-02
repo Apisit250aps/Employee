@@ -6,12 +6,12 @@
 erDiagram
     Employee {
         Int id PK
+        Int Department_id FK
         String fname
         String lname
         String gender
-        String age
+        Int age
         String education
-        Int Department_id FK
     }
 
     Department {
